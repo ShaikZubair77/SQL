@@ -1,0 +1,622 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.*;
+import java.lang.*;
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        HelloWorld hw = new HelloWorld();
+        hw.reverseString("zara");
+        int [] prices = {7,1,5,3,5,6};
+        hw.maxProfit(prices);
+        hw.isPalindrome("wassaw");
+    int [] numbersd = {4,3,2,7,8,1,3};
+        hw.findNumbersDisappeared(numbersd);
+     int [] heights={1,8,6,2,5,4,8,3,7};
+        hw.maxAreaContainer(heights);
+        String s ="Zaraaa has amazing speaking skills, Zaraaa has amazing riding skills  skills, Zaraaa is beautiful";
+     String [] BannedWord = {"hit"};
+     hw.mostCommonWord(s,BannedWord);
+     String[] a ={"tea","ate","eta","tan","nat","tan","ant"};
+     hw.groupAnangrams(a);
+     String unique ="leet";
+     hw.firstUniqueCharacter(unique);
+    // int nodes=4, edges =5;
+     hw.adjacencyList(3,5);
+     
+     //{0,1,2,3}
+    // int[] nums ={1,1,2};
+     //  hw.removeDuplicates(nums);
+     String t ="tree";
+     hw.sortCharacters(t);
+     int [] nums ={3,1,2,4};
+     hw.sortByParity(nums);
+     
+     hw.isValidAnagram("anagram","nagaram");
+   //  int[] nums1= {2,7,9,11};
+    // hw.twoSum(nums1,9);
+        
+    }
+     //Reverse a string
+     public String reverseString(String s){
+          char[] characters = s.toCharArray();
+          int i=0;int j= characters.length-1;
+          while(i<j){
+              char c = characters[i];
+              characters[i++] = characters[j];
+              characters[j--] = c;
+          }
+          System.out.println(characters);
+          return new String(characters);
+      }
+      
+     //Lowest common ancestor of a binary tree --3
+     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q){
+         if(p.val < root.val && q.val < root.val){
+             return LowestCommonAncestor(root.left,p,q);
+         }else if(p.val > root.val && q.val > root.val){
+             return LowestCommonAncestor(root.right,p,q);
+         } else{
+             return root;
+         }
+     }
+     
+     //Best time to buy a stock 2  ----  2
+     //{7,1,4,3,5,6}
+     
+     public int maxProfit(int [] prices){
+         int profit =0;
+        for(int i=0;i<prices.length-1;i++){
+            if(prices[i+1]>prices[i]){
+                profit = profit+ prices[i+1]- prices[i];
+            }
+        }
+        System.out.println(profit);
+        return profit;
+     }
+     
+     //Valid Palindrome "A man, a plan, a canal, panama" --4
+     public boolean isPalindrome(String st){
+         if(st == null || st.length() == 0){
+             return true;
+         }
+         int i=0;
+         int j= st.length()-1;
+         while(i<j){
+             while(i< j && !Character.isLetterOrDigit(st.charAt(i))){
+             i++;
+             }
+             while(i<j &&   !Character.isLetterOrDigit(st.charAt(j))){
+             j--;
+             }
+              if(i<j && Character.toLowerCase(st.charAt(i++)) != Character.toLowerCase(st.charAt(j--))){
+                  System.out.println(false);
+                 return false;
+            
+             }
+             
+         }
+          System.out.println(true);
+         return true;
+     }
+     
+     //Find all numbers disappeared in an array --5  [1,4,5]
+     
+     public List<Integer> findNumbersDisappeared(int[] numbers){
+         List<Integer> numbersDisappeared = new ArrayList<Integer>();
+         
+         Set<Integer> availableNumbers= new HashSet<Integer>();
+         
+         if(numbers ==null || numbers.length ==0){
+             return numbersDisappeared;
+         }
+         for(int i:numbers){
+             availableNumbers.add(i);
+         }
+         for(int j=1; j<=numbers.length;j++){
+             if(!availableNumbers.contains(j)){
+                 numbersDisappeared.add(j);
+             }
+         }
+         System.out.println(numbersDisappeared);
+         return numbersDisappeared;
+         
+     }
+     
+     //Container with most water --- 6
+     //note highest height and length is maxArea, b_pointer-a_Pointer gives us length
+     public int maxAreaContainer(int [] heights){
+         if(heights== null || heights.length== 0){
+             return 0;
+         }
+         int maxArea=0;
+         int a_pointer =0;
+         int b_pointer= heights.length-1;
+         while(a_pointer<b_pointer){
+             if(heights[a_pointer]< heights[b_pointer]){
+                 maxArea =Math.max(maxArea, heights[a_pointer] * (b_pointer-a_pointer));
+                 a_pointer++;
+             } else{
+                 maxArea =Math.max(maxArea, heights[b_pointer] * (b_pointer-a_pointer));
+                 b_pointer--;
+             }
+         }
+         System.out.println(maxArea);
+         return maxArea;
+         
+     }
+     
+     //Remove duplicates from sorted Array. --- 7
+     //return the length of the new array
+     // int[] nums ={0,1,1,1,2,2,3}
+     public int removeDuplicates(int[] nums){
+         int index =1;
+         for(int i=0;i <nums.length-1;i++){
+             if(nums[i] != nums[i+1]){
+                 nums[index++] = nums[i+1];
+             }
+         }
+         System.out.println(index);
+         return index;
+     }
+     
+     //Reverse a LinkedList -- 8
+      
+      public ListNode reverseLnkedlist(ListNode head){
+          
+          ListNode curr = head;
+          ListNode prev = null;
+          ListNode next = null;
+          
+          while(curr != null){
+              next = curr.next; //save next
+              curr.next = prev; // revere 
+              prev = curr; // Advance Prev and curr
+              curr = next;
+          }
+          
+          return prev;
+      }
+     //Most Common Word  -- 9
+     // ball 3
+     // is   1
+    // "The ball is hit the BAT and the hit ball went so far, cath that hit Ball"
+     //"BannedWord = [hit]"
+     public String mostCommonWord(String paragraph, String[] bannedWords){
+      HashSet<String> bannedWordsSet = new HashSet<String>();
+      HashMap<String,Integer> words = new HashMap<String,Integer>();
+      
+      //populate hasset with banned words
+      for(String bannedWord: bannedWords){
+          bannedWordsSet.add(bannedWord);
+      }
+       //populate words hashmap with not banned words and their count
+       for(String word: paragraph.replaceAll("[^a-zA-Z]"," ").toLowerCase().split(" ")){
+           if(!bannedWordsSet.contains(word)){
+               words.put(word,words.getOrDefault(word,0)+1);
+           }
+       }
+       
+       String result ="";
+       
+       for(String key:words.keySet()){
+           if(result.equals("")||words.get(key)> words.get(result)){
+           result =  key;
+       }
+       }
+       System.out.println(result);
+       return result;
+     }
+     
+     
+     
+     
+     //1
+     //24
+     //567
+     //Binary Tree Level Order Traversal --11 -- BFS(Breadth First Searrooch)
+     public List<List<Integer>> bfs(TreeNode root){
+         List<List<Integer>> result = new ArrayList<>();
+         if(root == null){
+             return result;
+         }
+         Queue<TreeNode> queue = new LinkedList<TreeNode>();
+         queue.add(root);
+         while(!queue.isEmpty()){
+              
+              List<Integer> currentLevel = new ArrayList<Integer>();
+              for(int i=0;i<queue.size();i++){
+                  TreeNode current = queue.remove();
+                  currentLevel.add(current.val);
+                  if(current.left != null){
+                      queue.add(current.left);
+                  } 
+                  if(current.right != null){
+                      queue.add(current.right);
+                  }
+              }
+              result.add(currentLevel);
+         }
+         return result;
+     }
+     
+     //Letter Combination of a phone Number-- 10
+     //Letter Combination of a phone Number-- 10
+     //Input = "23" 2- abc 3- def
+     //Output =["ad","bd","cd","bd","be","bf","cd","ce","cf"]
+     public List<String> letterCombinations(String digits) {
+         List<String> result = new ArrayList<>();
+         String[] mapping = 
+         {
+             "0",  //index 0
+             "1",  //index 1
+             "abc", //index 2
+             "def", //
+             "ghi", //
+             "jkl", //
+             "mno", //
+             "pqrs",//
+             "tuv", //
+             "wxyz"
+         };
+         letterCombinationsRecursive(result,digits,"",0,mapping);
+         return result;
+     }
+     public void letterCombinationsRecursive(List<String> result, String digits, String current, int index, String[] mapping){
+         
+         if(index == digits.length()){
+             result.add(current);
+             return;
+         } 
+                //"abc"         
+         String letters=mapping[digits.charAt(index)-'0'];
+         for(int i=0;i<letters.length();i++){
+         letterCombinationsRecursive(result, digits, current+letters.charAt(index), index+1, mapping);
+         }
+     }
+     //Sort Chracters by frequency -- 12
+     public String sortCharacters(String s){
+         StringBuilder result= new StringBuilder();
+         HashMap<Character,Integer> map = new HashMap<Character, Integer>();
+         if(s == null){
+             return result.toString();
+         }
+         char [] chars = s.toCharArray();
+         for(char c:chars){
+             map.put(c,map.getOrDefault(c,0)+1);
+         }
+         PriorityQueue<Character> maxHeap = new PriorityQueue<>((a,b)->map.get(b)-map.get(a));
+         maxHeap.addAll(map.keySet());
+         while(!maxHeap.isEmpty()){
+          char current = maxHeap.remove();
+          for(int i=0;i<map.get(current);i++){
+              result.append(current);
+           }
+         }
+          System.out.println(result.toString());
+          return result.toString();
+     }
+     
+     //Merge K sorted Lists -- 13
+     public ListNode mergeLists(ListNode[] lists){
+         //put everything in minheap
+         PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+         for(ListNode head:lists){
+             if(head!=null){
+                 minHeap.add(head.x);
+                 head= head.next;
+             }
+         }
+         
+         ListNode dummy = new ListNode(-1);
+         ListNode head = dummy;
+         while(!minHeap.isEmpty()){
+           head.next = new ListNode(minHeap.remove());
+           head= head.next;
+         }
+         return dummy.next;
+     }
+     
+      
+     public List<List<String>> groupAnangrams(String[] anagrams){
+         List<List<String>> groupedAnagrams = new ArrayList<>();
+         HashMap<String,List<String>> map = new HashMap<String, List<String>>();
+     for(String anagram:anagrams){
+         List<String> currentAnagrams = new ArrayList<String>();
+         char []  chars = anagram.toCharArray();//{'t';'e','a'}
+         Arrays.sort(chars);//{'a','e','t'};
+         String sorted = new String(chars);//"aet"
+         if(!map.containsKey(sorted)){
+             map.put(sorted, new ArrayList<>());
+         }
+        map.get(sorted).add(anagram);// aet - tea,ate,
+        
+     }
+   
+      groupedAnagrams.addAll(map.values());
+      System.out.println(groupedAnagrams);
+      return groupedAnagrams;
+         
+     }
+     
+//      1
+//    2   2
+//   3 4 4 3    
+    
+     //Symmetric tree --15
+     public boolean isSymmetric(TreeNode root){
+         if(root == null){
+             return true;
+         }
+         return isSymmetric(root.left, root.right); //thid is different function
+     }
+     public boolean isSymmetric(TreeNode left, TreeNode right){
+         if(left == null || right==null){
+             return left == right;
+         } else if( left.val != right.val){
+             return false;
+         }
+        return  isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left);
+     }
+     
+     
+     
+     
+     
+     //Sort Array By parity --16
+     public int[] sortByParity(int [] arr){
+         int index =0;
+         for(int i=0;i<arr.length;i++){
+             if(arr[i] % 2==0){
+                 int temp = arr[index];
+                 arr[index++] =arr[i];
+                 arr[i] = temp;
+             }
+         }
+         for(int j=0 ;j<arr.length;j++){
+         System.out.print(arr[j]);
+         }
+         return arr;
+     }
+     //Walls and gates -- 17
+     //Number of Island -- 18
+     //Max area of Island -- 19
+     //Count Primes -- 21
+      
+     //Meeting rooms -- 20
+     //combination sum -1 -- 22
+     //Combination sum -2  -- 23
+     //Subset -1 --24
+     //Subset -2 --25
+     
+     //Two Sums-- 26
+       //int [] nums =[2,7,9,11];
+       //target 9
+       
+       //public  int[] twoSum(int[] nums, int target){
+         //  HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+           //for(int i=0;i<nums.length;i++){
+             //  int  x= target-nums[i];
+               //if(map.containsKey(x)){
+                 // int y = map.get(nums[i]);
+                   //System.out.println(y,i+1);
+                   //return new int[]{map.get(nums[i]),i+1};
+               //} else{
+                 //  map.put(nums[i],i);
+               //}
+           //}
+           //return new int[]{};
+       //}
+     //Odd and Even Linked list --27
+     //Rotten oranges --28
+     //Meeting rooms 2 -- 29
+     //valid Anagram --30
+     public boolean isValidAnagram(String s, String t){
+         int[] chars_count = new int[26];
+       //  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+         for(int i=0;i<s.length();i++){
+             chars_count[s.charAt(i)-'a']++;
+             chars_count[t.charAt(i)-'a']--;
+             
+         }
+         for(int count:chars_count){
+             if(count!=0){
+                 return false;
+             }
+         }
+         System.out.print(true);
+         return true;
+         
+     }
+     //First Unique character in a String --31
+    // "Leetcode"
+    //"ffffffg"
+     public int firstUniqueCharacter(String s){
+         
+         HashMap<Character,Integer> map = new HashMap<Character,Integer>();
+         char c [] = s.toCharArray();
+         for(int i=0;i<c.length;i++){
+              if(!map.containsKey(c[i])){
+                  map.put(c[i],i);  
+              } else {
+                   map.put(c[i],-1);
+              }
+         }
+         
+         int min =Integer.MAX_VALUE;
+         
+         for(char d:map.keySet()){
+             System.out.println(map);
+             if(map.get(d)>-1&& map.get(d)<min){
+                 
+                min =map.get(d);
+                 
+             }
+         }
+          System.out.println(min);
+         return min ==Integer.MAX_VALUE? -1:min;
+     }
+     
+     //Graph Adjacency matrix
+     //Find N and m "N" are nodes and M are edges
+     //find if the graph is '0' based or '1'
+     //Create an array of length n+1 * n+1
+      public void adjacencyMatrix(int n, int edge){
+          int[][] adj = new int[n+1][n+1];
+          
+          //edge from 1--2
+          adj[1][2] =1;
+          adj[2][1] =1;
+          
+          //edge from 1--3
+   
+          adj[1][3] = 1;
+          adj[3][1] = 1;
+          
+          //edge from 1--5
+
+           adj[2][3] =1;
+           adj[3][1] =1;
+          
+      }
+     //Graph Adjacency list
+       //0
+       //1 2,3,5
+       //2 1,3,4
+       //3 4,5
+       //4 3,2
+       //5 3,1
+      
+      public void adjacencyList(int nodes, int edge){
+          ArrayList<ArrayList<Integer>> adj= new ArrayList<ArrayList<Integer>>();
+          for(int i=0;i<=nodes;i++){
+              adj.add(new ArrayList());
+          }
+          
+          //1---2
+          adj.get(1).add(2);
+          adj.get(2).add(1);
+          
+          //1--3
+          adj.get(1).add(3);
+          adj.get(3).add(1);
+          
+          //2--3
+          adj.get(2).add(3);
+          adj.get(3).add(2);
+      
+      //for(int k=1;k<nodes;k++){
+       //      for(int j=0;j<adj.get(k).size();k++){
+         //     System.out.print(adj.get(k).get(j)+" ");
+         // }
+      //}
+   }
+   
+      //BFS
+      public ArrayList<Integer> bfs(int v, ArrayList<ArrayList<Integer>> adj){
+          
+          ArrayList<Integer> bfs = new ArrayList<Integer>();
+          boolean [] isVis= new boolean[v+1];
+          for(int i=1;i<=v;i++)
+          {
+              if(isVis[i] == false)
+              {
+                  Queue<Integer> q= new LinkedList<>();
+                  q.add(i);
+                  isVis[i] = true;
+              
+                while(!queue.isEmpty())
+                {
+                  int node = queue.poll();
+                  bfs.add(node);
+                   for(int adacentNode: adj.get(node))
+                   {
+                      if(isVis[adjacentNode] == false)
+                      {
+                          q.add(adjacentNode);
+                          isVis[adjacentNode] == true;
+                      }
+                   }
+                }
+              }
+          }
+          return bfs;
+      }
+      //DFS
+       public ArrayList<Integer> dfs(int v, ArrayList<ArrayList<Integer>> adj ){
+           boolean [] isVis = new boolean[v+1];
+           ArrayList<Integer> dfsResult = new ArrayList<Integer>();
+           for(int i=1;i<=v;i++){
+               if(isVis[i] == false){
+                   dfsRecur(i,isVis,adj, dfsResult);
+               }
+           }
+           return dfsRsult;
+       }
+       
+       public void dfsRec(int node, boolean [] isVis, ArrayList<ArrayList<Integer>> adj , ArrayList<Integer> dfsResult){
+           dfsResult.add(node);
+           isVis[node] = true;
+           for(int visNode:adj.get(node)){
+                if(!isVis[node] ==  false){
+                       dfsRec(visNode,isVis,adj,dfsResult); 
+                }
+           }
+           
+       }
+       
+      //Cycle Detection in Undirected graph
+      //topological sort
+      //Cycle detection in directed graph
+      //Shortest path in Directed Acyclic graph
+      //Shortest path in undirected graphs with weights
+      //Minimum spanning tree
+      //Disjoint
+      
+      //Binary search tree, -- tomorrow
+      //binary trees(Gayle Mc don) ,
+      //stack 
+      //queues
+      //hashmap
+      //LinkedList
+      //Booking my show Design
+      
+      
+      
+}
+
+
+class TreeNode{
+    
+    int val;
+    TreeNode right;
+    TreeNode left;
+    public TreeNode(int x){
+        val= x;
+    }
+}
+
+//Used for cycle detection
+
+class Node{
+    
+    int first;
+    int second;
+    Node(int first, int second){
+        this.first = first;
+        this.second = second;
+        
+    }
+}
+
+
+class ListNode{
+    
+    ListNode next;
+    int x;
+    
+    ListNode(int val){
+        
+        x= val;
+    }
+}
