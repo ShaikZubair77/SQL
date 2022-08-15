@@ -521,20 +521,20 @@ class HelloWorld {
           {
               if(isVis[i] == false)
               {
-                  Queue<Integer> q= new LinkedList<>();
-                  q.add(i);
+                  Queue<Integer> queue= new LinkedList<>();
+                  queue.add(i);
                   isVis[i] = true;
               
                 while(!queue.isEmpty())
                 {
                   int node = queue.poll();
                   bfs.add(node);
-                   for(int adacentNode: adj.get(node))
+                   for(int adjacentNode: adj.get(node))
                    {
                       if(isVis[adjacentNode] == false)
                       {
-                          q.add(adjacentNode);
-                          isVis[adjacentNode] == true;
+                          queue.add(adjacentNode);
+                          isVis[adjacentNode] =true;
                       }
                    }
                 }
@@ -548,24 +548,60 @@ class HelloWorld {
            ArrayList<Integer> dfsResult = new ArrayList<Integer>();
            for(int i=1;i<=v;i++){
                if(isVis[i] == false){
-                   dfsRecur(i,isVis,adj, dfsResult);
+                   dfsRecur(i,isVis,adj,dfsResult);
                }
            }
-           return dfsRsult;
+           return dfsResult;
        }
        
-       public void dfsRec(int node, boolean [] isVis, ArrayList<ArrayList<Integer>> adj , ArrayList<Integer> dfsResult){
+       public void dfsRecur(int node, boolean [] isVis, ArrayList<ArrayList<Integer>> adj , ArrayList<Integer> dfsResult){
            dfsResult.add(node);
            isVis[node] = true;
            for(int visNode:adj.get(node)){
-                if(!isVis[node] ==  false){
-                       dfsRec(visNode,isVis,adj,dfsResult); 
+                if(!isVis[visNode] ==  false){
+                       dfsRecur(visNode,isVis,adj,dfsResult); 
                 }
            }
            
        }
-       
-      //Cycle Detection in Undirected graph
+       //Cycle detection 
+       public boolean iscycleDetected(int startingNode,boolean [] isVis, ArrayList<ArrayList<Integer>> adj
+       )
+       {
+          
+           Queue<Node> q= new LinkedList<>();
+           q.add(new Node(startingNode,-1));
+           isVis[startingNode] =true;
+          
+          while(!q.isEmpty()){
+              int node = q.peek().first;
+              int par= q.peek().second;
+               q.remove();
+               
+               for(int adjNode:adj.get(node)){
+                   if(isVis[adjNode]==false){
+                       q.add(new Node(adjNode,node));
+                       isVis[adjNode] = true;
+                   }else if(adjNode!= par){
+                       return true;
+                   }
+               }
+          }
+          return false;
+       }
+      //Cycle Detection in Undirected graph// driver code
+      public boolean cycleDetection(int V, ArrayList<ArrayList<Integer>> adj){
+          
+          boolean[] isVis = new boolean[V+1];
+          for(int i=1;i<=V;i++){
+              if(isVis[i] == false){
+                  if(iscycleDetected(i,isVis,adj)){
+                      return true;
+                  }
+              }
+          }
+          return false;
+      }
       //topological sort
       //Cycle detection in directed graph
       //Shortest path in Directed Acyclic graph
