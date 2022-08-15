@@ -378,8 +378,8 @@ class HelloWorld {
          }
          return arr;
      }
-     //Walls and gates -- 17
-     public void wallANdGates(int [][] rooms){
+     //Walls and gates -- 17 Graph -- DFS
+     public void wallAndGates(int [][] rooms){
          for(int i=0;i<rooms.length;i++){
              for(int j=0; j<rooms[i].length;j++){
                   if(rooms[i][j] == 0){
@@ -400,7 +400,57 @@ class HelloWorld {
          }
      }
      //Number of Island -- 18
+     public int numberOfIsland(char[][] grid){
+         int numberOfIslands =0;
+         for(int i=0; i<grid.length;i++){
+             for( int j=0; j<grid[i].length;j++){
+                 if(grid[i][j] == '1'){
+                     numberOfIslands+=dfs(grid,i,j);
+                 }
+             }
+         }
+         return numberOfIslands;
+         
+     }
+     
+     public void dfs(int i ,int j, char[][] grid){
+         if(i<0 && i>=grid.length && j<0 && j>= grid.length && grid[i][j] == '0'){
+             return 0;
+         }
+         grid[i][j] =0;
+         dfs(i+1,j, grid);
+         dfs(i-1,j,grid);
+         dfs(i,j+1,grid);
+         dfs(i,j-1,grid);
+         return 1;
+     }
      //Max area of Island -- 19
+     public int maxAreaOfIsland(int[][] grid){
+         int maxArea =0;
+         for(int i =0;i<grid.length;i++){
+             for(int j=0;j<grid[i].length;j++){
+                 if(grid[i][j] ==1){
+                     maxArea = Math.max(maxArea, dfs(grid,i,j));
+                 }
+             }
+         }
+         return maxArea;
+
+     }
+     
+     public void dfs(int [][] grid,int i, int j){
+         if(i<0 && i>=grid.length && j<0 && j >= grid[i].length; j++ && grid[i][j] =0){
+             return 0;
+         } 
+          grid[i][j] =0;
+          int count =1;
+          count+= dfs(grid, i+1,j);
+          count+= dfs(grid, i-1,j);
+          count+= dfs(grid, i, j+1);
+          count+= dfs(grid ,i, j-1);
+          
+          return count;
+     }
      //Count Primes -- 21
       
      //Meeting rooms -- 20
@@ -408,6 +458,8 @@ class HelloWorld {
      //Combination sum -2  -- 23
      //Subset -1 --24
      //Subset -2 --25
+     //N -queens
+     // rat in a maze
      
      //Two Sums-- 26
        //int [] nums =[2,7,9,11];
@@ -635,7 +687,13 @@ class HelloWorld {
       //queues
       //hashmap
       //LinkedList
+      
       //Booking my show Design
+      //Google DOcs
+      //url shortner
+      //twitter/fb
+      //Ditributed transaction
+      //key value cahce/parking lot
       
       
       
