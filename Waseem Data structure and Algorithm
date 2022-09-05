@@ -452,14 +452,64 @@ class HelloWorld {
           return count;
      }
      //Count Primes -- 21
+     
       
      //Meeting rooms -- 20
      //combination sum -1 -- 22
+     
+     public  ArrayList<ArrayList<Integer>> combinations(int index , int [] arr){
+         ArrayList<ArrayList<Integer>> ans = new List<List<Integer>();
+         combinationSum1(0, arr,ds,new ArrayList<>());
+         return ans;
+     }
+     
+     public combinationSum1(int index, int target, int [] arr, ArrayList<ArrayList<Integer>> ans,
+     List<Integer> ds){
+         if(index == arr.length){
+             if(target == 0)
+             //ds.add(arr[index]);
+             ans.add(new ArrayList<Integer>(ds));// adding array list to arraylist of arraylist
+             return;
+         }
+         //taking
+         if(arr[index]<= target){
+             ds.add(arr[index]);
+         combinationSum1(index,target-arr[index],arr,ans,ds);
+         ds.remove(ds.size()-1);
+         }
+         combinationSum1(index+1,target,arr,ans,ds);
+         
+     }
      //Combination sum -2  -- 23
      //Subset -1 --24
      //Subset -2 --25
-     //N -queens
+     //N -queens //No
      // rat in a maze
+     
+     //Print Subsequences in an array
+     //Sudo
+     
+     public ArrayList<Integer> printSubsequences(int [] arr, int index, int n, ArrayList<Integer> ds){
+         
+         //ArrayList<Integer> ds = new ArraList<>();
+           if(index ==n ){
+         for(int integer : ds){
+           {
+                 System.out.println(ds);
+                 return;
+             }
+         }
+             ds.add(arr[index]);
+             printSubsequences(index+1, ds,arr, n);// take
+             ds.remove(arr[index]);
+             printSubsequences(index+1, ds, arr, n); //not take
+         }
+         
+         //int [] arr ={3,2,1};
+           
+         
+         
+     }
      
      //Two Sums-- 26
        //int [] nums =[2,7,9,11];
@@ -479,8 +529,16 @@ class HelloWorld {
            //}
            //return new int[]{};
        //}
+       
      //Odd and Even Linked list --27
-     //Rotten oranges --28
+     //Rotten oranges --28 0-is empty cell  1- fresh orange  2-rotten orange
+     //0 1 2
+     //2 1 1
+     //1 1 1
+     //input - [[2,1,1],[1,1,0],[0,1,1]]
+     //Every minute every fresh orange sitting next to rotten orange gets rotten
+     // calculate the number of minutes it takes to make the entire grid rotten
+     // if it is not possible return -1
      //Meeting rooms 2 -- 29
      //valid Anagram --30
      public boolean isValidAnagram(String s, String t){
@@ -734,3 +792,22 @@ class ListNode{
         x= val;
     }
 }
+
+Behavioural Questions
+
+Build dashboards using prometheus connector --> Graphana dashboards helped 
+our team know how much time an advocate is spending on particular workitem
+
+Migrated code from .net core 3.1 to .net 6 so many blockers and from app servicce to k8s 
+
+FOund out we were paying extra for our Azure resourcer, APp services, Azure 
+spend by bumping own the
+
+Did Load testing of our APis  for reduced Latency
+
+Improved performance of the API
+Adding Caching
+Prevent from DDOS attack  by ensuring rate limiting
+Use patch call where instead of using 
+Using CDNs
+Limit Payloads
